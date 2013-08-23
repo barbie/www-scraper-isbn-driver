@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '0.16';
+our $VERSION = '0.17';
 
 
 # Preloaded methods go here.
@@ -170,6 +170,20 @@ fields, which may be useful in gleaning information about failed searches.
 
 Searches for information on the given ISBN number.  Each driver must define its own search routine, doing whatever is necessary to 
 retrieve the desired information.  If found, it should set C<< $driver->found >> and C<< $driver->book >> accordingly.
+
+=head1 KNOWN DRIVERS
+
+=over 4
+
+L<WWW::Scraper::ISBN::LOC_Driver> - Search Library of Congress online catalog
+
+L<WWW::Scraper::ISBN::ISBNnu_Driver> - Search www.isbn.nu
+
+L<WWW::Scraper::ISBN::Pearson_Driver> - Search Pearson Education's online catalog
+
+L<WWW::Scraper::ISBN::ORA_Driver> - Search O'Reilly and Associates's online catalog
+
+=back
 
 =head1 SEE ALSO
 
