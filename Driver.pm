@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Carp;
 
-our $VERSION = '0.17';
+our $VERSION = '0.18';
 
 
 # Preloaded methods go here.
@@ -48,9 +48,19 @@ sub search {
 	croak("Child class must overload 'search()' method.");
 }
 
+# a generic method for storing the error & setting not found
+
+sub handler {
+	my $self = shift;
+	if (@_) {
+		$self->{ERROR} = shift;
+		print "Error: $self->{ERROR}\n"	if $self->verbosity;
+	};
+	return $self->found(0);
+}
+
 1;
 __END__
-# Below is stub documentation for your module. You'd better edit it!
 
 =head1 NAME
 
@@ -59,11 +69,12 @@ WWW::Scraper::ISBN::Driver - Driver class for WWW::Scraper::ISBN module.
 =head1 SYNOPSIS
 
     use WWW::Scraper::ISBN::Driver;
-    $driver = WWW::Scraper::ISBN->driver();
+    $driver = WWW::Scraper::ISBN::Driver->new();
     $driver->search($isbn);
     if ($driver->found) { ... }
     $driver->verbosity(1);
-    print $driver->book{'title'};
+    my $book = $driver->book();
+    print $book('title');
     print $driver->error;
 
 =head1 REQUIRES
@@ -114,6 +125,7 @@ None by default.
 The following methods are provided by C<WWW::Scraper::ISBN::Driver>:
 
 =over 4
+
 =item C<new()>
 
     $drv = WWW::Scraper::ISBN::Driver->new()
@@ -171,6 +183,12 @@ fields, which may be useful in gleaning information about failed searches.
 Searches for information on the given ISBN number.  Each driver must define its own search routine, doing whatever is necessary to 
 retrieve the desired information.  If found, it should set C<< $driver->found >> and C<< $driver->book >> accordingly.
 
+=item C<handler() or handler($error_string)>
+
+    $driver->handler("Invalid ISBN number, or some similar error.");
+
+A generic handler method for handling errors.  If given an error string, will store as per C<< $self->error($error_string) >> and print on the standard output if verbosity is set.  Returns C<< $self->found(0) >>.
+
 =head1 KNOWN DRIVERS
 
 =over 4
@@ -183,6 +201,11 @@ L<WWW::Scraper::ISBN::Pearson_Driver> - Search Pearson Education's online catalo
 
 L<WWW::Scraper::ISBN::ORA_Driver> - Search O'Reilly and Associates's online catalog
 
+L<WWW::Scraper::ISBN::AmazonUK_Driver> - Search Amazon's UK online catalog
+
+L<WWW::Scraper::ISBN::AmazonUS_Driver> - Search Amazon's US online catalog
+
+L<WWW::Scraper::ISBN::Yahoo_Driver> - Search Yahoo! Books' online catalog
 =back
 
 =head1 SEE ALSO
