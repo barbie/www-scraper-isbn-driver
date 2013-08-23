@@ -5,7 +5,9 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     'NAME'		=> 'WWW::Scraper::ISBN::Driver',
     'VERSION_FROM'	=> 'Driver.pm', # finds $VERSION
-    'PREREQ_PM'		=> {}, # e.g., Module::Name => 1.1
+    'PREREQ_PM'		=> {
+		Carp => 1.0
+		},
     ($] >= 5.005 ?    ## Add these new keywords supported since 5.005
-       (AUTHOR     => 'Andy Schamp <ams5@calvin.edu>') : ()),
+       (AUTHOR     => 'Andy Schamp <andy@schamp.net>') : ()),
 );
