@@ -1,32 +1,10 @@
 package WWW::Scraper::ISBN::Driver;
 
-use 5.008;
 use strict;
 use warnings;
 use Carp;
 
-require Exporter;
-
-our @ISA = qw(Exporter);
-
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-
-# This allows declaration	use WWW::Scraper::ISBN::Driver ':all';
-# If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
-# will save memory.
-our %EXPORT_TAGS = ( 'all' => [ qw(
-	
-) ] );
-
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
-our @EXPORT = qw(
-	
-);
-
-our $VERSION = '0.15';
+our $VERSION = '0.16';
 
 
 # Preloaded methods go here.
@@ -195,11 +173,16 @@ retrieve the desired information.  If found, it should set C<< $driver->found >>
 
 =head1 SEE ALSO
 
-    WWW::Scraper::ISBN
-    WWW::Scraper::ISBN::Record
+=over 4
+
+L<WWW::Scraper::ISBN>
+
+L<WWW::Scraper::ISBN::Record>
 
 No mailing list or website currently available.  Primary development done through CSX 
 ( L<http://csx.calvin.edu/> ).
+
+=back
 
 =head1 AUTHOR
 
