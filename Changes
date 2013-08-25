@@ -2,16 +2,17 @@ Revision history for Perl extension WWW::Scraper::ISBN::Driver.
 
         - New Maintainer: Barbie.
         - move module into lib directory structure.
+        - change file dates changed to meet W3CDTF standards.
 
-0.18 - 01/05/2005 - A. Schamp
-	Made corrections to documentation, applied patches
-	submitted by Barbie.
+0.18    2005-05-01
+        - Made corrections to documentation, applied patches
+          submitted by Barbie.
 
-0.17 - ? - A. Schamp
-	Lost in the shuffle
+0.17    2004-04-13
+        - Lost in the shuffle
 
-0.16 - 04/06/2004 - A. Schamp
-	Removed exporter and perl version stuff
-	by user request
+0.16    2004-06-04
+        - Removed exporter and perl version stuff by user request
 
-0.15	- Began using Changes file ;), updated documentation
+0.15    2004-03-30
+        - Began using Changes file ;), updated documentation
