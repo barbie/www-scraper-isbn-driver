@@ -1,11 +1,43 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         WWW-Scraper-ISBN-Driver
-version:      0.18
-version_from: Driver.pm
-installdirs:  site
-requires:
-    Carp:                          1
+--- #YAML:1.0
+name:                     WWW-Scraper-ISBN-Driver
+version:                  0.18
+abstract:                 Driver class for WWW::Scraper::ISBN module
+author:
+  - Andy Schamp <andy@schamp.net>
+  - Barbie <barbie@cpan.org>
 
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.20
+license:                  artistic_2
+distribution_type:        module
+installdirs:              site
+
+requires:
+  perl:                           5.006
+  Carp:                           1.00
+recommends:
+  Test::CPAN::Meta:               0
+  Test::CPAN::Meta::JSON:         0
+  Test::Pod:                      1.00
+  Test::Pod::Coverage:            0.08
+build_requires:
+  IO::File:                       0
+  Test::More:                     0.70
+
+provides:
+  WWW::Scraper::ISBN::Driver:
+    file:     lib/WWW/Scraper/ISBN/Driver.pm
+    version:  0.18
+
+no_index:
+  directory:
+    - t
+    - examples
+
+resources:
+  license:    http://www.perlfoundation.org/artistic_license_2_0
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=WWW-Scraper-ISBN-Driver
+  repository: http://github.com/barbie/www-scraper-isbn-driver
+
+meta-spec:
+   version:   1.4
+   url:       http://module-build.sourceforge.net/META-spec-v1.4.html
+generated_by: Hand 1.0

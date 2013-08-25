@@ -4,6 +4,7 @@ Revision history for Perl extension WWW::Scraper::ISBN::Driver.
         - move module into lib directory structure.
         - change file dates changed to meet W3CDTF standards.
         - reworked Makefile.PL for clarity.
+        - added META.json and updated META.yml.
 
 0.18    2005-05-01
         - Made corrections to documentation, applied patches
