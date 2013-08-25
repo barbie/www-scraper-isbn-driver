@@ -24,8 +24,7 @@
         "runtime" : {
             "requires" : {
                 "perl": "5.006",
-                "Carp": "1.00",
-                "WWW::Scraper::ISBN::Record": "0.15"
+                "Carp": "1.00"
             }
         },
         "test" : {
