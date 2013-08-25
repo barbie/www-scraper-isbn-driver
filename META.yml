@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                     WWW-Scraper-ISBN-Driver
-version:                  0.18
+version:                  0.19
 abstract:                 Driver class for WWW::Scraper::ISBN module
 author:
   - Andy Schamp <andy@schamp.net>
@@ -25,7 +25,7 @@ build_requires:
 provides:
   WWW::Scraper::ISBN::Driver:
     file:     lib/WWW/Scraper/ISBN/Driver.pm
-    version:  0.18
+    version:  0.19
 
 no_index:
   directory:
