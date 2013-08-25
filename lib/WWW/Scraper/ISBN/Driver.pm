@@ -204,6 +204,8 @@ A generic handler method for handling errors.  If given an error string, will
 store as per C<< $self->error($error_string) >> and print on the standard 
 output if verbosity is set.  Returns C<< $self->found(0) >>.
 
+=back
+
 =head1 KNOWN DRIVERS
 
 The current list of known drivers can be installed via the following Bundle:
