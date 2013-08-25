@@ -2,10 +2,10 @@ package WWW::Scraper::ISBN::Driver;
 
 use strict;
 use warnings;
+
 use Carp;
 
 our $VERSION = '0.18';
-
 
 # Preloaded methods go here.
 sub new {
@@ -27,15 +27,15 @@ sub found {
 }
 
 sub verbosity {
-        my $self = shift;
-        if (@_) { $self->{VERBOSITY} = shift };
-        return $self->{VERBOSITY};
+    my $self = shift;
+    if (@_) { $self->{VERBOSITY} = shift };
+    return $self->{VERBOSITY};
 }
 
 sub book {
-        my $self = shift;
-        if (@_) { $self->{BOOK} = shift };
-        return $self->{BOOK};
+    my $self = shift;
+    if (@_) { $self->{BOOK} = shift };
+    return $self->{BOOK};
 }        
 
 sub error {
@@ -45,7 +45,7 @@ sub error {
 }
 
 sub search {
-	croak("Child class must overload 'search()' method.");
+	croak(q{Child class must overload 'search()' method.});
 }
 
 # a generic method for storing the error & setting not found
@@ -60,6 +60,7 @@ sub handler {
 }
 
 1;
+
 __END__
 
 =head1 NAME
@@ -69,10 +70,13 @@ WWW::Scraper::ISBN::Driver - Driver class for WWW::Scraper::ISBN module.
 =head1 SYNOPSIS
 
     use WWW::Scraper::ISBN::Driver;
+    
     $driver = WWW::Scraper::ISBN::Driver->new();
     $driver->search($isbn);
+
     if ($driver->found) { ... }
     $driver->verbosity(1);
+    
     my $book = $driver->book();
     print $book('title');
     print $driver->error;
@@ -85,16 +89,19 @@ Requires the following modules be installed:
 
 =head1 DESCRIPTION
 
-This is a base class, all site-specific drivers should inherit its members and methods.  Driver 
-subclasses named 'C<$name>' should be packaged as C<WWW::Scraper::ISBN::$name_Driver>, e.g. 
-C<WWW::Scraper::ISBN::LOC_Driver> for LOC (Library of Congress) driver.  Each driver need only implement the 
-C<search()> method, though they may have as many other methods as they need to get their job done.  Only 
-C<search()> will be called by C<< WWW::Scraper::ISBN->search() >>.
+This is a base class, from which all site-specific drivers should inherit its 
+members and methods.  Driver subclasses named 'C<$name>' should be packaged as 
+C<WWW::Scraper::ISBN::$name_Driver>, e.g. C<WWW::Scraper::ISBN::LOC_Driver> 
+for the LOC (Library of Congress) driver. Each driver need only implement the 
+C<search()> method, though they may have as many other methods as they need to 
+get their job done. Only C<search()> will be called by 
+C<< WWW::Scraper::ISBN->search() >>.
 
 =head2 Standard Fields
 
-It is important that the different drivers return at least a core set of information, though they may return 
-additional information.  The following self-explanatory fields should exist in C<$driver->book>:
+It is important that the different drivers return at least a core set of 
+information, though they may return additional information.  The following 
+self-explanatory fields should exist in C<< $driver->book >>:
 
 =over 4
 
@@ -106,19 +113,19 @@ additional information.  The following self-explanatory fields should exist in C
 
 =back
 
-Additional standard fields may be added in the future.  'volume' and 'edition' are common.  In some cases, there may be no 
-information available for 'volume' or 'edition', and so these may be set to the empty string.  However, they must still 
-be set in the hash! 
+In some cases, there may be no information for these fields, and so these may 
+be set to the empty string. However, they must still be set in the hash! 
+
+Additional standard fields may be added in the future. 'pages', 'weight', 
+'height', 'depth and 'description' are common. 
 
 =head2 Expiration
 
-Due to the dynamic, ever-changing nature of the web, it is highly likely that the site from which many of these drivers glean 
-their information will change.  Hopefully, driver maintainers will keep drivers up to date, but they will all expire, and may 
-behave unexpectedly.  Keep this in mind if the driver continually returns weird results.
-
-=head2 Export
-
-None by default.
+Due to the dynamic, ever-changing nature of the web, it is highly likely that 
+the site from which many of these drivers glean their information will change.  
+Hopefully, driver maintainers will keep drivers up to date, but they will all 
+expire, and may behave unexpectedly.  Keep this in mind if the driver 
+continually returns weird results.
 
 =head1 METHODS
 
@@ -130,83 +137,85 @@ The following methods are provided by C<WWW::Scraper::ISBN::Driver>:
 
     $drv = WWW::Scraper::ISBN::Driver->new()
 
-Class constructor.  Creates new driver object and returns a reference to it.  Sets the following default 
-values:
+Class constructor. Creates new driver object and returns a reference to it. 
+Sets the following default values:
 
     found = 0;
     verbosity = 0;
     book = undef;
-    error = "";
+    error = '';
 
 =item C<found() or found($bool)>
 
     if ($drv->found) { # ... }
     $drv->found(1);
 
-Accessor/Mutator method for handling the search status of this record.  This is 0 by default, and should 
-only be set true if search was deemed successful and C<< $driver->book >> contains appropriate information.
+Accessor/Mutator method for handling the search status of this record. This is 
+0 by default, and should only be set true if search was deemed successful and 
+C<< $driver->book >> contains appropriate information.
 
 =item C<verbosity() or verbosity($level)>
 
     $driver->verbosity(3);
-    if ($driver->verbosity == 2) { print "blah blah blah"; }
+    if ($driver->verbosity == 2) { print 'blah blah blah'; }
 
-Accessor/Mutator method for handling the verbosity level to be generated by this driver as it is going.  
-This can be used to print useful information by the driver as it is running.
+Accessor/Mutator method for handling the verbosity level to be generated by 
+this driver as it is going. This can be used to print useful information by 
+the driver as it is running.
 
 =item C<book() or book($hashref)>
 
     my $book = $drv->book;
     print $book->{'title'}; 
     print $book->{'author'};
-    $another_book = { 'title' => "Some book title",
+    $another_book = { 'title' => 'Some book title',
         'author' => "Author of some book"
     };
     $drv->book( $another_book );
 
-Accessor/Mutator method for handling the book information retrieved by the driver.  The driver should create an anonymous hash 
-containing the standard fields.  C<< WWW::Scraper::ISBN->search >> sets the C<< WWW::Scraper::ISBN::Record->book() >> field to this 
-value.
+Accessor/Mutator method for handling the book information retrieved by the 
+driver. The driver should create an anonymous hash containing the standard 
+fields. C<< WWW::Scraper::ISBN->search >> sets the 
+C<< WWW::Scraper::ISBN::Record->book() >> field to this value.
 
 =item C<error() or error($error_string)>
 
     print $driver->error;
-    $driver->error("Invalid ISBN number, or some similar error.");
+    $driver->error('Invalid ISBN number, or some similar error.');
 
-Accessor/Mutator method for handling any errors which occur during the search.  The search drivers may add errors to record
-fields, which may be useful in gleaning information about failed searches.
+Accessor/Mutator method for handling any errors which occur during the search.
+The search drivers may add errors to record fields, which may be useful in 
+gleaning information about failed searches.
 
 =item C<search($isbn)>
 
-    my $record = $driver->search("123456789X");
+    my $record = $driver->search('123456789X');
 
-Searches for information on the given ISBN number.  Each driver must define its own search routine, doing whatever is necessary to 
-retrieve the desired information.  If found, it should set C<< $driver->found >> and C<< $driver->book >> accordingly.
+Searches for information on the given ISBN number. Each driver must define its
+own search routine, doing whatever is necessary to retrieve the desired 
+information. If found, it should set C<< $driver->found >> and 
+C<< $driver->book >> accordingly.
 
 =item C<handler() or handler($error_string)>
 
-    $driver->handler("Invalid ISBN number, or some similar error.");
+    $driver->handler('Invalid ISBN number, or some similar error.');
 
-A generic handler method for handling errors.  If given an error string, will store as per C<< $self->error($error_string) >> and print on the standard output if verbosity is set.  Returns C<< $self->found(0) >>.
+A generic handler method for handling errors.  If given an error string, will 
+store as per C<< $self->error($error_string) >> and print on the standard 
+output if verbosity is set.  Returns C<< $self->found(0) >>.
 
 =head1 KNOWN DRIVERS
 
+The current list of known drivers can be installed via the following Bundle:
+
 =over 4
 
-L<WWW::Scraper::ISBN::LOC_Driver> - Search Library of Congress online catalog
+L<Bundle::WWW::Scraper::ISBN::Drivers>
 
-L<WWW::Scraper::ISBN::ISBNnu_Driver> - Search www.isbn.nu
-
-L<WWW::Scraper::ISBN::Pearson_Driver> - Search Pearson Education's online catalog
-
-L<WWW::Scraper::ISBN::ORA_Driver> - Search O'Reilly and Associates's online catalog
-
-L<WWW::Scraper::ISBN::AmazonUK_Driver> - Search Amazon's UK online catalog
-
-L<WWW::Scraper::ISBN::AmazonUS_Driver> - Search Amazon's US online catalog
-
-L<WWW::Scraper::ISBN::Yahoo_Driver> - Search Yahoo! Books' online catalog
 =back
+
+If you create a driver, please post a GitHub pull request or create an RT 
+ticket against the Bundle distribution.
 
 =head1 SEE ALSO
 
@@ -216,20 +225,19 @@ L<WWW::Scraper::ISBN>
 
 L<WWW::Scraper::ISBN::Record>
 
-No mailing list or website currently available.  Primary development done through CSX 
-( L<http://csx.calvin.edu/> ).
-
 =back
 
 =head1 AUTHOR
 
-Andy Schamp, E<lt>andy@schamp.netE<gt>
+  2004-2013 Andy Schamp, E<lt>andy@schamp.netE<gt>
+  2013      Barbie, E<lt>barbie@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2004 by Andy Schamp
+  Copyright 2004-2013 by Andy Schamp
+  Copyright 2013 by Barbie
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. 
+  This distribution is free software; you can redistribute it and/or
+  modify it under the Artistic Licence v2.
 
 =cut
