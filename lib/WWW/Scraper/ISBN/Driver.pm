@@ -11,37 +11,28 @@ our $VERSION = '0.19';
 sub new {
 	my $proto = shift;
 	my $class = ref($proto) || $proto;
-	my $self = {};
-	$self->{FOUND} = 0;
-	$self->{VERBOSITY} = 0;
-	$self->{BOOK} = undef;
-	$self->{ERROR} = "";
-	bless ($self, $class);
+
+    my $self = {
+	    FOUND       => 0,
+	    VERBOSITY   => 0,
+	    BOOK        => undef,
+	    ERROR       => ""
+    };
+	
+    bless ($self, $class);
 	return $self;
 }
 
-sub found {
-	my $self = shift;
-	if (@_) { $self->{FOUND} = shift };
-	return $self->{FOUND};
-}
+sub found       { my $self = shift; return $self->accessor('FOUND',@_};     }
+sub verbosity   { my $self = shift; return $self->accessor('VERBOSITY',@_}; }
+sub book        { my $self = shift; return $self->accessor('BOOK',@_};      }
+sub error       { my $self = shift; return $self->accessor('ERROR',@_};     }
 
-sub verbosity {
-    my $self = shift;
-    if (@_) { $self->{VERBOSITY} = shift };
-    return $self->{VERBOSITY};
-}
-
-sub book {
-    my $self = shift;
-    if (@_) { $self->{BOOK} = shift };
-    return $self->{BOOK};
-}        
-
-sub error {
-	my $self = shift;
-	if (@_) { $self->{ERROR} = shift };
-	return $self->{ERROR};
+sub accessor {
+	my $self     = shift;
+	my $accessor = shift;
+	if (@_) { $self->{$accessor} = shift };
+	return $self->{$accessor};
 }
 
 sub search {
