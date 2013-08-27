@@ -1,6 +1,9 @@
 Revision history for WWW::Scraper::ISBN::Driver
 ===============================================
 
+0.20    2013-08-27
+        - further extended test suite.
+
 0.19    2013-08-25
         - New Maintainer: Barbie.
         - move module into lib directory structure.
