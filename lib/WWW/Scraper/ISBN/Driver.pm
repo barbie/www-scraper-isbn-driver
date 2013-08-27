@@ -16,19 +16,19 @@ sub new {
 	    FOUND       => 0,
 	    VERBOSITY   => 0,
 	    BOOK        => undef,
-	    ERROR       => ""
+	    ERROR       => ''
     };
 	
     bless ($self, $class);
 	return $self;
 }
 
-sub found       { my $self = shift; return $self->accessor('FOUND',@_};     }
-sub verbosity   { my $self = shift; return $self->accessor('VERBOSITY',@_}; }
-sub book        { my $self = shift; return $self->accessor('BOOK',@_};      }
-sub error       { my $self = shift; return $self->accessor('ERROR',@_};     }
+sub found       { my $self = shift; return $self->_accessor('FOUND',@_)     }
+sub verbosity   { my $self = shift; return $self->_accessor('VERBOSITY',@_) }
+sub book        { my $self = shift; return $self->_accessor('BOOK',@_)      }
+sub error       { my $self = shift; return $self->_accessor('ERROR',@_)     }
 
-sub accessor {
+sub _accessor {
 	my $self     = shift;
 	my $accessor = shift;
 	if (@_) { $self->{$accessor} = shift };
