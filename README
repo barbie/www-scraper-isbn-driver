@@ -3,6 +3,13 @@ WWW-Scraper-ISBN-Driver
 
 WWW::Scraper::ISBN::Driver - Driver class for WWW::Scraper::ISBN module.
 
+WARNING:
+
+This distribution will be deprecated in the near future. The module within is
+to be merged into the main WWW-Scraper-ISBN distribution.
+
+DESCRIPTION
+
 This is a base class, from which all site-specific drivers should inherit its 
 members and methods.  Driver subclasses named 'C<$name>' should be packaged as 
 WWW::Scraper::ISBN::$name_Driver, e.g. WWW::Scraper::ISBN::LOC_Driver for the 
@@ -28,7 +35,7 @@ This module requires these other modules and libraries:
 COPYRIGHT AND LICENCE
 
   Copyright (C) 2004-2013 Andy Schamp, andy@schamp.net
-  Copyright (C) 2013      Barbie, barbie@cpan.org
+  Copyright (C) 2013-2014 Barbie, barbie@cpan.org
 
   This distribution is free software; you can redistribute it and/or
   modify it under the Artistic Licence v2.
