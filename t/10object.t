@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 
-use Test::More tests => 17;
+use Test::More tests => 21;
 
 use WWW::Scraper::ISBN::Driver;
 
@@ -32,3 +32,14 @@ is($driver->found,0);
 is($driver->error,'this is an error');
 is($driver->handler(),0);
 is($driver->error,'this is an error'); # stays the same, if no other error given
+
+# now with verbose off
+
+$driver->verbosity(0);
+
+eval { $driver->search() };
+like($@,qr/Child class/);
+
+is($driver->handler('this is still an error'),0);
+is($driver->found,0);
+is($driver->error,'this is still an error');
