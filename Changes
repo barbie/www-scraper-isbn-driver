@@ -3,6 +3,7 @@ Revision history for WWW::Scraper::ISBN::Driver
 
         - extract conversion methods into the driver.
         - extended test suite.
+        - fixed distribution name in META.
 
 0.21    2014-04-07
         - added LICENSE file.

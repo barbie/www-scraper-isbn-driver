@@ -8,7 +8,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     AUTHOR              => 'Barbie <barbie@cpan.org>',
-    NAME                => 'WWW::Scraper::ISBN::Driver',
+    NAME                => 'WWW-Scraper-ISBN-Driver',
     VERSION_FROM        => 'lib/WWW/Scraper/ISBN/Driver.pm',
     ABSTRACT            => 'Driver class for WWW::Scraper::ISBN module',
     NO_META             => 1,
