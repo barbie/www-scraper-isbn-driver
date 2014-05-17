@@ -3,9 +3,15 @@ package WWW::Scraper::ISBN::Driver;
 use strict;
 use warnings;
 
+our $VERSION = '0.21';
+
+#----------------------------------------------------------------------------
+# Library Modules
+
 use Carp;
 
-our $VERSION = '0.21';
+#----------------------------------------------------------------------------
+# Public API
 
 # Preloaded methods go here.
 sub new {
@@ -39,8 +45,10 @@ sub search {
 	croak(q{Child class must overload 'search()' method.});
 }
 
-# a generic method for storing the error & setting not found
+#----------------------------------------------------------------------------
+# Internal Class methods
 
+# a generic method for storing the error & setting not found
 sub handler {
 	my $self = shift;
 	if (@_) {
@@ -48,6 +56,76 @@ sub handler {
 		print "Error: $self->{ERROR}\n"	if $self->verbosity;
 	};
 	return $self->found(0);
+}
+
+sub convert_to_ean13 {
+	my $self = shift;
+    my $isbn = shift;
+    my $prefix;
+
+    return  unless(length $isbn == 10 || length $isbn == 13);
+
+    if(length $isbn == 13) {
+        return  if($isbn !~ /^(978|979)(\d{10})$/);
+        ($prefix,$isbn) = ($1,$2);
+    } else {
+        return  if($isbn !~ /^(\d{10}|\d{9}X)$/);
+        $prefix = '978';
+    }
+
+    my $isbn13 = $prefix . $isbn;
+    chop($isbn13);
+    my @isbn = split(//,$isbn13);
+    my ($lsum,$hsum) = (0,0);
+    while(@isbn) {
+        $hsum += shift @isbn;
+        $lsum += shift @isbn;
+    }
+
+    my $csum = ($lsum * 3) + $hsum;
+    $csum %= 10;
+    $csum = 10 - $csum  if($csum != 0);
+
+    return $isbn13 . $csum;
+}
+
+sub convert_to_isbn10 {
+	my $self = shift;
+    my $ean  = shift;
+    my ($isbn,$isbn10);
+
+    return  unless(length $ean == 10 || length $ean == 13);
+
+    if(length $ean == 13) {
+        return  if($ean !~ /^(?:978|979)(\d{9})\d$/);
+        ($isbn,$isbn10) = ($1,$1);
+    } else {
+        return  if($ean !~ /^(\d{9})[\dX]$/);
+        ($isbn,$isbn10) = ($1,$1);
+    }
+
+	my ($csum, $pos, $digit) = (0, 0, 0);
+    for ($pos = 9; $pos > 0; $pos--) {
+        $digit = $isbn % 10;
+        $isbn /= 10;             # Decimal shift ISBN for next time 
+        $csum += ($pos * $digit);
+    }
+    $csum %= 11;
+    $csum = 'X'   if ($csum == 10);
+    return $isbn10 . $csum;
+}
+
+sub is_valid {
+	my $self = shift;
+    my $isbn = shift or return 0;
+
+    # validate and convert into EAN13 format
+    my $ean = $self->convert_to_ean13($isbn);
+    return 0
+        if(!$ean || (length $isbn == 13 && $isbn ne $ean)
+                 || (length $isbn == 10 && $isbn ne $self->convert_to_isbn10($ean)));
+
+    return 1;
 }
 
 1;
@@ -199,6 +277,21 @@ C<< $driver->book >> accordingly.
 A generic handler method for handling errors.  If given an error string, will 
 store as per C<< $self->error($error_string) >> and print on the standard 
 output if verbosity is set.  Returns C<< $self->found(0) >>.
+
+=item C<convert_to_ean13($isbn)>
+
+Given a 10/13 character ISBN, this function will return the correct 13 digit
+ISBN, also known as EAN13.
+
+=item C<convert_to_isbn10($isbn)>
+
+Given a 10/13 character ISBN, this function will return the correct 10 digit 
+ISBN.
+
+=item C<is_valid($isbn)>
+
+Given a 10/13 character ISBN, this function will return 1 if it considers it
+looks like a valid ISBN, otherwise returns 0.
 
 =back
 
