@@ -1,6 +1,6 @@
 {
     "name": "WWW-Scraper-ISBN-Driver",
-    "version": "0.21",
+    "version": "0.22",
     "abstract": "Driver class for WWW::Scraper::ISBN module",
     "author": [
       "Andy Schamp <andy@schamp.net>",
@@ -44,7 +44,7 @@
     "provides": {
         "WWW::Scraper::ISBN::Driver": {
             "file": "lib/WWW/Scraper/ISBN/Driver.pm",
-            "version": "0.21"
+            "version": "0.22"
         }
     },
     "no_index": {
